@@ -9,6 +9,7 @@ public class TriestBase implements DataStreamAlgo {
     int triangles;
     LinkedHashMap<Integer, LinkedHashSet<Integer>> vertex_neighbors;
     ArrayList<Edge> edges;
+
     /*
      * Constructor.
      * The parameter samsize denotes the size of the sample, i.e., the number of
@@ -26,14 +27,10 @@ public class TriestBase implements DataStreamAlgo {
         edges = new ArrayList<>();
 	}
 
-    //1 351 441
-
 	public void handleEdge(Edge edge){
 
-        //System.out.print(time + ":  ");
-
         // if less than samsize edges, just add edge
-        // otherwise add edge with p=0.5
+        // otherwise add edge with p = sample_size / time
         if(time <= samsize){
 
             // add edge to sample
