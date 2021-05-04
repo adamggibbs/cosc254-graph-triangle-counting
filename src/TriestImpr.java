@@ -28,18 +28,25 @@ public class TriestImpr implements DataStreamAlgo {
 
 	public void handleEdge(Edge edge){
 
-        int new_triangles = countTriangles(edge);
-
-        double nt = nt_t(time);
-
-        triangles += (int)(nt*new_triangles);
+        
 
         if(time <= samsize){
+            int new_triangles = countTriangles(edge);
+            triangles += new_triangles;
             addEdge(edge);
-        } else if(flipCoin(time)){
-            Edge randEdge = getRandomEdge();
-            removeEdge(randEdge);
-            addEdge(edge);
+        } else{
+
+            int new_triangles = countTriangles(edge);
+
+            double nt = nt_t(time);
+
+            triangles += (int)(nt*new_triangles);
+
+            if(flipCoin(time)){
+                Edge randEdge = getRandomEdge();
+                removeEdge(randEdge);
+                addEdge(edge);
+            }
         }
 
         time++;

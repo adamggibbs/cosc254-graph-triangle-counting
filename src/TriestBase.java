@@ -33,13 +33,13 @@ public class TriestBase implements DataStreamAlgo {
         // otherwise add edge with p = sample_size / time
         if(time <= samsize){
 
-            // add edge to sample
-            addEdge(edge);
-
             // count how many new triangles are added with new edge
             // update triangles count 
             int new_triangles = countTriangles(edge);
             triangles += new_triangles;
+
+            // add edge to sample
+            addEdge(edge);
 
         } else if(flipCoin(time)){
 
@@ -71,7 +71,7 @@ public class TriestBase implements DataStreamAlgo {
 
         // if fewer edges than sample size have been inserted,
         // return the number of triangles
-        if(time < samsize){
+        if(time <= samsize){
             return triangles;
         }
 
