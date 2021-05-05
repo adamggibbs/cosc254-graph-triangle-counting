@@ -5,6 +5,6 @@ do
 	for j in 5000 10000 20000 30000 40000
 	do
 		echo "Improved run $i for sample size $j"
-		java Main -i $j ../input/ca-AstroPh.txt > ~/amherst/cosc254/cosc254-triangle-counting/output/output.${j}I.$i.txt &
+		java Main -i $j ../input/ca-AstroPh.txt > ~/amherst/cosc254/cosc254-triangle-counting/output2/output.${j}I.$i.txt 
 	done
 done
