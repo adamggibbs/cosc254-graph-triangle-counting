@@ -3,9 +3,10 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 
 public class TriestImpr implements DataStreamAlgo {
+    
     int samsize;
     int time;
-    int triangles;
+    double triangles;
     LinkedHashMap<Integer, LinkedHashSet<Integer>> vertex_neighbors;
     ArrayList<Edge> edges;
 
@@ -38,9 +39,9 @@ public class TriestImpr implements DataStreamAlgo {
 
             int new_triangles = countTriangles(edge);
 
-            double nt = nt_t(time);
+            double nt = Math.max(1, nt_t(time));
 
-            triangles += (int)(nt*new_triangles);
+            triangles += nt*new_triangles;
 
             if(flipCoin(time)){
                 Edge randEdge = getRandomEdge();
@@ -55,7 +56,7 @@ public class TriestImpr implements DataStreamAlgo {
 
 	public int getEstimate(){ 
 
-        return triangles;
+        return (int)triangles;
         
     } // getEstimate()
 
