@@ -5,7 +5,7 @@ do
 	for j in 5000 10000 20000 30000 40000
 	do
 		echo "Baseline run $i for sample size $j"
-		java Main -b $j ../input/ca-AstroPh.txt > ~/amherst/cosc254/cosc254-triangle-counting/output2/output.$j.$i.txt &
+		java Main -b $j ../input/ca-AstroPh.txt > ~/amherst/cosc254/cosc254-triangle-counting/output/output.$j.$i.txt &
 	done
 done
 wait
