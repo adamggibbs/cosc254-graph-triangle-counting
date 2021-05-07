@@ -4,6 +4,7 @@ import java.util.LinkedHashSet;
 
 public class TriestImpr implements DataStreamAlgo {
     
+    // instance variables
     int samsize;
     int time;
     double triangles;
@@ -29,8 +30,13 @@ public class TriestImpr implements DataStreamAlgo {
 
 	public void handleEdge(Edge edge){
 
-        
-
+        // if time is less than sample size,
+        // count triangle from incoming edge, add edge
+        // otherwise determine whether to add edge
+        // if edge is added, 
+        // remove a random edge from sample and,
+        // decrement triangles from removed edge and,
+        // increment triangles from added edge
         if(time <= samsize){
             int new_triangles = countTriangles(edge);
             triangles += new_triangles;
@@ -78,8 +84,12 @@ public class TriestImpr implements DataStreamAlgo {
 
     private void addEdge(Edge edge){
 
+        // add edge to ArrayList
         edges.add(edge);
 
+        // if first vertex is not in HashMap, 
+        // add it and add second vertex as a neighbor
+        // otherwise just add second vertex as a neighbor
         if(vertex_neighbors.containsKey(edge.u)){
             vertex_neighbors.get(edge.u).add(edge.v);
         } else {
@@ -87,6 +97,9 @@ public class TriestImpr implements DataStreamAlgo {
             vertex_neighbors.get(edge.u).add(edge.v);
         }
 
+        // if second vertex is not in HashMap, 
+        // add it and add first vertex as a neighbor
+        // otherwise just add first vertex as a neighbor
         if(vertex_neighbors.containsKey(edge.v)){
             vertex_neighbors.get(edge.v).add(edge.u);
         } else {
@@ -98,11 +111,16 @@ public class TriestImpr implements DataStreamAlgo {
 
     private void removeEdge(Edge edge){
 
+        // remove second vertex as a neighbor of the first
         vertex_neighbors.get(edge.u).remove(edge.v);
+        // if first vertex now has no neighbors, remove it from HashMap
         if(vertex_neighbors.get(edge.u).isEmpty()){
             vertex_neighbors.remove(edge.u);
         }
 
+        // if edge is not a self loop,
+        // remove first vertex as a neighbor of the second
+        // if second vertex now has no neighbors, remove it from HashMap
         if(edge.u != edge.v){
             vertex_neighbors.get(edge.v).remove(edge.u);
             if(vertex_neighbors.get(edge.v).isEmpty()){
@@ -115,8 +133,11 @@ public class TriestImpr implements DataStreamAlgo {
 
     private Edge getRandomEdge(){
 
+        // get random index of ArrayList
         int index = (int)(Math.random()*edges.size());
+        // get the random edge to remove
         Edge randEdge = edges.get(index);
+        // remove edge from ArrayList
         edges.remove(index);
 
         return randEdge;
@@ -125,15 +146,19 @@ public class TriestImpr implements DataStreamAlgo {
 
     private int countTriangles(Edge edge){
 
+        // if edge is a self loop, it cannot form a triangle
         if(edge.u == edge.v){
             return 0;
         }
 
+
         int triangles = 0;
 
+        // get neighbors of each vertex of edge
         LinkedHashSet<Integer> u_neighbors = vertex_neighbors.get(edge.u);
         LinkedHashSet<Integer> v_neighbors = vertex_neighbors.get(edge.v);
 
+        // increment triangle for each neighbor shared between verteces in the edge
         if(u_neighbors != null && v_neighbors != null){
             for (int neighbor : u_neighbors) {
 
@@ -143,7 +168,6 @@ public class TriestImpr implements DataStreamAlgo {
                 
             }
         }
-        
 
         return triangles;
 

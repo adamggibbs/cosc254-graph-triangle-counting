@@ -53,13 +53,13 @@ public class TriestBase implements DataStreamAlgo {
             int lost_triangles = countTriangles(toRemove);
             triangles -= lost_triangles;
 
-            // add new edge to sample
-            addEdge(edge);
-
             // count how many new triangles are added with new edge
             // update triangles count 
             int new_triangles = countTriangles(edge);
             triangles += new_triangles;
+
+            // add new edge to sample
+            addEdge(edge);
 
         }
 
